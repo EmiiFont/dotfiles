@@ -12,8 +12,8 @@ set relativenumber
 set hlsearch
 set number
 set showmodewidget
-set set colorfulmodewidget
-
+set colorfulmodewidget
+set quickscope
 " Do incremental searching.
 set incsearch
 
@@ -23,6 +23,8 @@ let mapleader=" "
 " Don't use Ex mode, use Q for formatting.
 map Q gq
 
+" enable quickscope highlight on specific vim search motions
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
 
 " Highlight copied text
