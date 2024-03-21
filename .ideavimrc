@@ -41,10 +41,15 @@ map <leader>gd <Action>(GotoDeclaration)
 " nmap <leader>gy <Action>(GotoTypeDeclaration)
 nmap gi <Action>(GotoImplementation)
 map <leader>gu <Action>(ShowUsages)
-" nmap <leader>gt <Action>(GotoTest)
+nmap <leader>gt <Action>(GotoTest)
 nmap gf <Action>(Forward)
 nmap gb <Action>(Back)
-
+" Navigation
+nmap <leader>or <Action>(RecentFiles)
+nmap <leader>os <Action>(FileStructurePopup)
+nmap <leader>on <Action>(NextTab)
+nmap <leader>oo <Action>(PreviousTab)
+nmap <leader>oc <Action>(CloseActiveTab) 
 
 " Refactoring
 map <leader>rr <Action>(Refactorings.QuickListPopupAction)
@@ -56,6 +61,10 @@ map <leader>wv <Action>(SplitVertically)
 map <leader>ws <Action>(SplitHorizontally)
 map <leader>wu <Action>(Unsplit)
 map <leader>wm <Action>(MoveEditorToOppositeTabGroup)
+map <leader>wt <Action>(GotoTab)
+" go to next split
+nmap <leader>wn <Action>(NextSplitter)
+nmap <leader>wp <Action>(PreviousSplitter)
 
 
 
