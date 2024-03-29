@@ -45,17 +45,23 @@ nmap <leader>gt <Action>(GotoTest)
 nmap gf <Action>(Forward)
 nmap gb <Action>(Back)
 " Navigation
-nmap <leader>or <Action>(RecentFiles)
+nmap gr <Action>(RecentFiles)
 nmap <leader>os <Action>(FileStructurePopup)
-nmap <leader>on <Action>(NextTab)
-nmap <leader>oo <Action>(PreviousTab)
-nmap <leader>oc <Action>(CloseActiveTab) 
-
+nmap gn <Action>(NextTab)
+nmap gp <Action>(PreviousTab)
+" close tab
+nmap gc <Action>(CloseContent)
 " Refactoring
 map <leader>rr <Action>(Refactorings.QuickListPopupAction)
 map <leader>rn <Action>(RenameElement)
 map <leader>rm <Action>(ExtractMethod)
 
+" code action
+map <leader>ca <Action>(ShowIntentionActions)
+
+" formatting
+map <leader>cf <Action>(ReformatCode)
+map <leader>ci <Action>(FormatFile)
 " Window splits
 map <leader>wv <Action>(SplitVertically)
 map <leader>ws <Action>(SplitHorizontally)
