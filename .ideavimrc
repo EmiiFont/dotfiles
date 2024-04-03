@@ -45,8 +45,9 @@ nmap <leader>gt <Action>(GotoTest)
 nmap gf <Action>(Forward)
 nmap gb <Action>(Back)
 " Navigation
-nmap gr <Action>(RecentFiles)
-nmap <leader>os <Action>(FileStructurePopup)
+nmap fr <Action>(RecentFiles)
+nmap <leader>ff <Action>(FindInPath)
+nmap <leader>fs <Action>(FileStructurePopup)
 nmap gn <Action>(NextTab)
 nmap gp <Action>(PreviousTab)
 " close tab
