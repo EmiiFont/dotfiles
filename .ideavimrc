@@ -39,6 +39,10 @@ Plug 'tpope/vim-commentary'
 " when I pasted. I don't loose the previous thing I YANKED!
 vnoremap <leader>p "_dP
 
+vnoremap <leader>y "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap <leader>y "+y
+
 
 
 " Find (leader f)
@@ -54,7 +58,7 @@ nmap <leader>gt <Action>(GotoTest)
 nmap gf <Action>(Forward)
 nmap gb <Action>(Back)
 " Navigation
-nmap gr <Action>(RecentFiles)
+nmap fr <Action>(RecentFiles)
 nmap <leader>ss <Action>(FileStructurePopup)
 nmap gn <Action>(NextTab)
 nmap gp <Action>(PreviousTab)
