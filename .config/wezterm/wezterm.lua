@@ -56,25 +56,21 @@ config.keys = {
 		mods = "LEADER|CTRL",
 		action = wezterm.action.EmitEvent("toggle-opacity"),
 	},
-  -- show tab list useful when you have many tabs, otherwise use index or next/previous tab
 	{
 		key = "t",
 		mods = "LEADER",
 		action = wezterm.action.ShowTabNavigator,
 	},
-  -- zoom pane equivalent to make it fullscreen and back
 	{
 		key = "f",
 		mods = "LEADER",
 		action = wezterm.action.TogglePaneZoomState,
 	},
-  -- next tab
 	{
 		key = "n",
 		mods = "LEADER",
 		action = wezterm.action.ActivateTabRelative(1),
 	},
-  -- previous tab
 	{
 		key = "p",
 		mods = "LEADER",
@@ -106,7 +102,7 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
 	},
-  -- toggle the swap pane selector to change content with another pane
+
 	{
 		-- |
 		key = "{",
@@ -117,14 +113,45 @@ config.keys = {
 	{
 		key = "h",
 		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Prev"),
+		action = wezterm.action.ActivatePaneDirection("Left"),
 	},
+	{
+		key = "LeftArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Left"),
+	},
+	{
+		key = "j",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Down"),
+	},
+	{
+		key = "DownArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Down"),
+	},
+
 	{
 		key = "l",
 		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Next"),
+		action = wezterm.action.ActivatePaneDirection("Right"),
 	},
-  -- list WORKSPACES
+	{
+		key = "RightArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Right"),
+	},
+	{
+		key = "k",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Up"),
+	},
+	{
+		key = "UpArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Up"),
+	},
+
 	{ key = "g", mods = "LEADER", action = wezterm.action.ShowLauncherArgs({
 		flags = "FUZZY|WORKSPACES",
 	}) },
