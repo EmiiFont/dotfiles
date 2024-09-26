@@ -5,10 +5,8 @@ Welcome to my personal dotfiles repository! Here, you'll find my custom configur
 - OS: macOS
 - Editor: Neovim
 - Terminal: WezTerm
-- Multiplexer: Zellij
 - Shell: zsh
-- Theme: Catppuccin
+- Theme: Gruvbox
 
 Explore and tweak these settings to enhance your own workflow.
 
-URL![alt text](pde.png "Personal development environment")
