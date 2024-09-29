@@ -56,21 +56,25 @@ config.keys = {
 		mods = "LEADER|CTRL",
 		action = wezterm.action.EmitEvent("toggle-opacity"),
 	},
+	-- show tab list useful when you have many tabs, otherwise use index or next/previous tab
 	{
 		key = "t",
 		mods = "LEADER",
 		action = wezterm.action.ShowTabNavigator,
 	},
+	-- zoom pane equivalent to make it fullscreen and back
 	{
 		key = "f",
 		mods = "LEADER",
 		action = wezterm.action.TogglePaneZoomState,
 	},
+	-- next tab
 	{
 		key = "n",
 		mods = "LEADER",
 		action = wezterm.action.ActivateTabRelative(1),
 	},
+	-- previous tab
 	{
 		key = "p",
 		mods = "LEADER",
@@ -83,7 +87,7 @@ config.keys = {
 		mods = "LEADER|SHIFT",
 		action = wezterm.action.SplitPane({
 			direction = "Right",
-			size = { Percent = 50 },
+			size = { Percent = 30 },
 		}),
 	},
 	-- Horizontal split of pane
@@ -93,7 +97,7 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.SplitPane({
 			direction = "Down",
-			size = { Percent = 50 },
+			size = { Percent = 30 },
 		}),
 	},
 	-- close pane
@@ -102,7 +106,7 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
 	},
-
+	-- toggle the swap pane selector to change content with another pane
 	{
 		-- |
 		key = "{",
@@ -111,47 +115,17 @@ config.keys = {
 	},
 	-- move between panes
 	{
-		key = "h",
+		key = ";",
 		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Left"),
+		action = wezterm.action.ActivatePaneDirection("Prev"),
 	},
 	{
-		key = "LeftArrow",
+		key = "o",
 		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Left"),
+		action = wezterm.action.ActivatePaneDirection("Next"),
 	},
-	{
-		key = "j",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Down"),
-	},
-	{
-		key = "DownArrow",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Down"),
-	},
-
-	{
-		key = "l",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Right"),
-	},
-	{
-		key = "RightArrow",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Right"),
-	},
-	{
-		key = "k",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Up"),
-	},
-	{
-		key = "UpArrow",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Up"),
-	},
-		-- show/hide pane
+	{ key = "<", mods = "LEADER|SHIFT", action = wezterm.action.MoveTabRelative(-1) },
+	{ key = ">", mods = "LEADER|SHIFT", action = wezterm.action.MoveTabRelative(1) },
 	{
 		key = "t",
 		mods = "LEADER",
@@ -172,6 +146,7 @@ config.keys = {
 			end
 		end),
 	},
+	-- list WORKSPACES
 	{ key = "g", mods = "LEADER", action = wezterm.action.ShowLauncherArgs({
 		flags = "FUZZY|WORKSPACES",
 	}) },
