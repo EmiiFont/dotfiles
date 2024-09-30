@@ -124,6 +124,70 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.ActivatePaneDirection("Next"),
 	},
+		{
+		key = "h",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Left"),
+	},
+	{
+		key = "LeftArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Left"),
+	},
+	{
+		key = "j",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Down"),
+	},
+	{
+		key = "DownArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Down"),
+	},
+
+	{
+		key = "l",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Right"),
+	},
+	{
+		key = "RightArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Right"),
+	},
+	{
+		key = "k",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Up"),
+	},
+	{
+		key = "UpArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Up"),
+	},
+
+	{
+		key = "s",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(window, pane)
+			window:perform_action(
+				wezterm.action.PromptInputLine({
+					description = "Enter name for new workspace:",
+					action = wezterm.action_callback(function(window, pane, line)
+						if line then
+							window:perform_action(
+								wezterm.action.SwitchToWorkspace({
+									name = line,
+								}),
+								pane
+							)
+						end
+					end),
+				}),
+				pane
+			)
+		end),
+	},
 	{ key = "<", mods = "LEADER|SHIFT", action = wezterm.action.MoveTabRelative(-1) },
 	{ key = ">", mods = "LEADER|SHIFT", action = wezterm.action.MoveTabRelative(1) },
 	{
