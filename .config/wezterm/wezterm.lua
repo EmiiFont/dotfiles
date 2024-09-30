@@ -58,7 +58,7 @@ config.keys = {
 	},
 	-- show tab list useful when you have many tabs, otherwise use index or next/previous tab
 	{
-		key = "t",
+		key = "e",
 		mods = "LEADER",
 		action = wezterm.action.ShowTabNavigator,
 	},
@@ -124,7 +124,7 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.ActivatePaneDirection("Next"),
 	},
-		{
+	{
 		key = "h",
 		mods = "LEADER",
 		action = wezterm.action.ActivatePaneDirection("Left"),
