@@ -3,7 +3,7 @@ local tab = require("tab")
 local theme = require("theme")
 local config = wezterm.config_builder()
 
-config.color_scheme = "Gruvbox Dark (Gogh)"
+config.color_scheme = "OneDark (base16)"
 
 config.font = wezterm.font("JetBrains Mono")
 config.underline_thickness = "200%"
