@@ -2,6 +2,14 @@ local wezterm = require("wezterm")
 local tab = require("tab")
 local theme = require("theme")
 local config = wezterm.config_builder()
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+
+resurrect.periodic_save()
+
+local function basename(s)
+	return string.gsub(s, "(.*[/\\])(.*)", "%2")
+end
 
 config.color_scheme = "OneDark (base16)"
 
@@ -109,10 +117,16 @@ config.keys = {
 	-- toggle the swap pane selector to change content with another pane
 	{
 		-- |
-		key = "{",
-		mods = "LEADER|SHIFT",
+		key = "P",
+		mods = "LEADER",
 		action = wezterm.action.PaneSelect({ mode = "SwapWithActiveKeepFocus" }),
 	},
+	{
+		key = "p",
+		mods = "LEADER",
+		action = wezterm.action.PaneSelect({}),
+	},
+
 	-- move between panes
 	{
 		key = ";",
@@ -165,9 +179,8 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.ActivatePaneDirection("Up"),
 	},
-
 	{
-		key = "s",
+		key = "g",
 		mods = "LEADER",
 		action = wezterm.action_callback(function(window, pane)
 			window:perform_action(
@@ -211,10 +224,94 @@ config.keys = {
 		end),
 	},
 	-- list WORKSPACES
-	{ key = "g", mods = "LEADER", action = wezterm.action.ShowLauncherArgs({
-		flags = "FUZZY|WORKSPACES",
-	}) },
+	{ key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() },
+	{
+		key = "w",
+		mods = "ALT",
+		action = wezterm.action_callback(function(win, pane)
+			resurrect.save_state(resurrect.workspace_state.get_workspace_state())
+		end),
+	},
+	-- {
+	-- 	key = "W",
+	-- 	mods = "ALT",
+	-- 	action = resurrect.window_state.save_window_action(),
+	-- },
+	-- {
+	-- 	key = "T",
+	-- 	mods = "ALT",
+	-- 	action = resurrect.tab_state.save_tab_action(),
+	-- },
+	-- {
+	-- 	key = "s",
+	-- 	mods = "ALT",
+	-- 	action = wezterm.action_callback(function(win, pane)
+	-- 		resurrect.save_state(resurrect.workspace_state.get_workspace_state())
+	-- 		resurrect.window_state.save_window_action()
+	-- 	end),
+	-- },
+	{
+		key = "r",
+		mods = "ALT",
+		action = wezterm.action_callback(function(win, pane)
+			resurrect.fuzzy_load(win, pane, function(id, label)
+				local type = string.match(id, "^([^/]+)") -- match before '/'
+				id = string.match(id, "([^/]+)$") -- match after '/'
+				id = string.match(id, "(.+)%..+$") -- remove file extention
+				local opts = {
+					relative = true,
+					restore_text = true,
+					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+				}
+				if type == "workspace" then
+					local state = resurrect.load_state(id, "workspace")
+					resurrect.workspace_state.restore_workspace(state, opts)
+				elseif type == "window" then
+					local state = resurrect.load_state(id, "window")
+					resurrect.window_state.restore_window(pane:window(), state, opts)
+				elseif type == "tab" then
+					local state = resurrect.load_state(id, "tab")
+					resurrect.tab_state.restore_tab(pane:tab(), state, opts)
+				end
+			end)
+		end),
+	},
 }
+
+workspace_switcher.apply_to_config(config)
+workspace_switcher.workspace_formatter = function(label)
+	return wezterm.format({
+		{ Attribute = { Italic = true } },
+		{ Text = "󱂬 : " .. label },
+	})
+end
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
+	window:gui_window():set_right_status(wezterm.format({
+		{ Attribute = { Intensity = "Bold" } },
+		{ Text = basename(path) .. "  " },
+	}))
+	local workspace_state = resurrect.workspace_state
+
+	workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
+		window = window,
+		relative = true,
+		restore_text = true,
+		on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+	})
+end)
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window, path, label)
+	window:gui_window():set_right_status(wezterm.format({
+		{ Attribute = { Intensity = "Bold" } },
+		{ Text = basename(path) .. "  " },
+	}))
+end)
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
+	local workspace_state = resurrect.workspace_state
+	resurrect.save_state(workspace_state.get_workspace_state())
+end)
 
 -- theme.setup(config)
 tab.setup(config)
