@@ -9,4 +9,3 @@ Welcome to my personal dotfiles repository! Here, you'll find my custom configur
 - Theme: Gruvbox
 
 Explore and tweak these settings to enhance your own workflow.
-

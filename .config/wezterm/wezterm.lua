@@ -1,9 +1,11 @@
 local wezterm = require("wezterm")
 local tab = require("tab")
 local theme = require("theme")
+local keymaps = require("keymaps")
 local config = wezterm.config_builder()
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
 
 resurrect.periodic_save()
 
@@ -50,233 +52,17 @@ config.switch_to_last_active_tab_when_closing_tab = true
 config.pane_focus_follows_mouse = true
 config.scrollback_lines = 5000
 
-config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 
-config.keys = {
-	-- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
-	{
-		key = "a",
-		mods = "LEADER|CTRL",
-		action = wezterm.action.SendKey({ key = "a", mods = "CTRL" }),
-	},
-	{
-		key = "b",
-		mods = "LEADER|CTRL",
-		action = wezterm.action.EmitEvent("toggle-opacity"),
-	},
-	-- show tab list useful when you have many tabs, otherwise use index or next/previous tab
-	{
-		key = "e",
-		mods = "LEADER",
-		action = wezterm.action.ShowTabNavigator,
-	},
-	-- zoom pane equivalent to make it fullscreen and back
-	{
-		key = "f",
-		mods = "LEADER",
-		action = wezterm.action.TogglePaneZoomState,
-	},
-	-- next tab
-	{
-		key = "n",
-		mods = "LEADER",
-		action = wezterm.action.ActivateTabRelative(1),
-	},
-	-- previous tab
-	{
-		key = "p",
-		mods = "LEADER",
-		action = wezterm.action.ActivateTabRelative(-1),
-	},
-	-- Vertical split of pane
-	{
-		-- |
-		key = "|",
-		mods = "LEADER|SHIFT",
-		action = wezterm.action.SplitPane({
-			direction = "Right",
-			size = { Percent = 30 },
-		}),
-	},
-	-- Horizontal split of pane
-	{
-		-- -
-		key = "-",
-		mods = "LEADER",
-		action = wezterm.action.SplitPane({
-			direction = "Down",
-			size = { Percent = 30 },
-		}),
-	},
-	-- close pane
-	{
-		key = "w",
-		mods = "LEADER",
-		action = wezterm.action.CloseCurrentPane({ confirm = true }),
-	},
-	-- toggle the swap pane selector to change content with another pane
-	{
-		-- |
-		key = "P",
-		mods = "LEADER",
-		action = wezterm.action.PaneSelect({ mode = "SwapWithActiveKeepFocus" }),
-	},
-	{
-		key = "p",
-		mods = "LEADER",
-		action = wezterm.action.PaneSelect({}),
-	},
+keymaps.setup(config)
 
-	-- move between panes
-	{
-		key = ";",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Prev"),
-	},
-	{
-		key = "o",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Next"),
-	},
-	{
-		key = "h",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Left"),
-	},
-	{
-		key = "LeftArrow",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Left"),
-	},
-	{
-		key = "j",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Down"),
-	},
-	{
-		key = "DownArrow",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Down"),
-	},
-
-	{
-		key = "l",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Right"),
-	},
-	{
-		key = "RightArrow",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Right"),
-	},
-	{
-		key = "k",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Up"),
-	},
-	{
-		key = "UpArrow",
-		mods = "LEADER",
-		action = wezterm.action.ActivatePaneDirection("Up"),
-	},
-	{
-		key = "g",
-		mods = "LEADER",
-		action = wezterm.action_callback(function(window, pane)
-			window:perform_action(
-				wezterm.action.PromptInputLine({
-					description = "Enter name for new workspace:",
-					action = wezterm.action_callback(function(window, pane, line)
-						if line then
-							window:perform_action(
-								wezterm.action.SwitchToWorkspace({
-									name = line,
-								}),
-								pane
-							)
-						end
-					end),
-				}),
-				pane
-			)
-		end),
-	},
-	{ key = "<", mods = "LEADER|SHIFT", action = wezterm.action.MoveTabRelative(-1) },
-	{ key = ">", mods = "LEADER|SHIFT", action = wezterm.action.MoveTabRelative(1) },
-	{
-		key = "t",
-		mods = "LEADER",
-		action = wezterm.action_callback(function(_, pane)
-			local tab = pane:tab()
-			local panes = tab:panes_with_info()
-			if #panes == 1 then
-				pane:split({
-					direction = "Right",
-					size = 0.4,
-				})
-			elseif not panes[1].is_zoomed then
-				panes[1].pane:activate()
-				tab:set_zoomed(true)
-			elseif panes[1].is_zoomed then
-				tab:set_zoomed(false)
-				panes[2].pane:activate()
-			end
-		end),
-	},
-	-- list WORKSPACES
-	{ key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() },
-	{
-		key = "w",
-		mods = "ALT",
-		action = wezterm.action_callback(function(win, pane)
-			resurrect.save_state(resurrect.workspace_state.get_workspace_state())
-		end),
-	},
-	-- {
-	-- 	key = "W",
-	-- 	mods = "ALT",
-	-- 	action = resurrect.window_state.save_window_action(),
-	-- },
-	-- {
-	-- 	key = "T",
-	-- 	mods = "ALT",
-	-- 	action = resurrect.tab_state.save_tab_action(),
-	-- },
-	-- {
-	-- 	key = "s",
-	-- 	mods = "ALT",
-	-- 	action = wezterm.action_callback(function(win, pane)
-	-- 		resurrect.save_state(resurrect.workspace_state.get_workspace_state())
-	-- 		resurrect.window_state.save_window_action()
-	-- 	end),
-	-- },
-	{
-		key = "r",
-		mods = "ALT",
-		action = wezterm.action_callback(function(win, pane)
-			resurrect.fuzzy_load(win, pane, function(id, label)
-				local type = string.match(id, "^([^/]+)") -- match before '/'
-				id = string.match(id, "([^/]+)$") -- match after '/'
-				id = string.match(id, "(.+)%..+$") -- remove file extention
-				local opts = {
-					relative = true,
-					restore_text = true,
-					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-				}
-				if type == "workspace" then
-					local state = resurrect.load_state(id, "workspace")
-					resurrect.workspace_state.restore_workspace(state, opts)
-				elseif type == "window" then
-					local state = resurrect.load_state(id, "window")
-					resurrect.window_state.restore_window(pane:window(), state, opts)
-				elseif type == "tab" then
-					local state = resurrect.load_state(id, "tab")
-					resurrect.tab_state.restore_tab(pane:tab(), state, opts)
-				end
-			end)
-		end),
-	},
-}
+-- local act = wezterm.action
+-- config.key_tables.resize_pane = {
+-- 	-- { key = "h", mods = "SHIFT", action = act.AdjustPaneSize({ "Left", pane_resize }) },
+-- 	{ key = "j", mods = "SHIFT", action = act.AdjustPaneSize({ "Down", pane_resize }) },
+-- 	-- { key = "k", mods = "SHIFT", action = act.AdjustPaneSize({ "Up", pane_resize }) },
+-- 	-- { key = "l", mods = "SHIFT", action = act.AdjustPaneSize({ "Right", pane_resize }) },
+-- 	{ key = "Escape", action = act.PopKeyTable },
+-- }
 
 workspace_switcher.apply_to_config(config)
 workspace_switcher.workspace_formatter = function(label)
@@ -313,6 +99,73 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(wind
 	resurrect.save_state(workspace_state.get_workspace_state())
 end)
 
+-- -- Show which key table is active in the status area
+-- wezterm.on("update-right-status", function(window, pane)
+-- 	local name = window:active_key_table()
+-- 	if name then
+-- 		name = "TABLE: " .. name
+-- 	end
+-- 	window:set_right_status(name or "")
+-- end)
+
 -- theme.setup(config)
 tab.setup(config)
+local wez = wezterm
+bar.apply_to_config(config, {
+	position = "bottom",
+	max_width = 32,
+	padding = {
+		left = 1,
+		right = 1,
+	},
+	separator = {
+		space = 1,
+		left_icon = wez.nerdfonts.fa_long_arrow_right,
+		right_icon = wez.nerdfonts.fa_long_arrow_left,
+		field_icon = wez.nerdfonts.indent_line,
+	},
+	modules = {
+		tabs = {
+			active_tab_fg = 4,
+			inactive_tab_fg = 6,
+		},
+		workspace = {
+			enabled = true,
+			icon = wez.nerdfonts.cod_window,
+			color = 8,
+		},
+		leader = {
+			enabled = true,
+			icon = wez.nerdfonts.oct_rocket,
+			color = 2,
+		},
+		pane = {
+			enabled = false,
+			icon = wez.nerdfonts.cod_multiple_windows,
+			color = 7,
+		},
+		username = {
+			enabled = false,
+			icon = wez.nerdfonts.fa_user,
+			color = 6,
+		},
+		clock = {
+			enabled = true,
+			icon = wez.nerdfonts.md_calendar_clock,
+			color = 5,
+		},
+		cwd = {
+			enabled = true,
+			icon = wez.nerdfonts.oct_file_directory,
+			color = 7,
+		},
+		spotify = {
+			enabled = false,
+			icon = wez.nerdfonts.fa_spotify,
+			color = 3,
+			max_width = 64,
+			throttle = 15,
+		},
+	},
+})
 return config
