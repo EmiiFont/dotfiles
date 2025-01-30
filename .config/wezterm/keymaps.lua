@@ -196,6 +196,8 @@ function Keymaps.setup(config)
 		},
 		-- list WORKSPACES
 		{ key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() },
+		-- rename workspace
+		{ key = "R", mods = "LEADER", action = wezterm.action.EmitEvent("rename-workspace") },
 		{
 			key = "w",
 			mods = "ALT",
@@ -245,6 +247,20 @@ function Keymaps.setup(config)
 						resurrect.tab_state.restore_tab(pane:tab(), state, opts)
 					end
 				end)
+			end),
+		},
+		{
+			key = "d",
+			mods = "ALT",
+			action = wezterm.action_callback(function(win, pane)
+				resurrect.fuzzy_load(win, pane, function(id)
+					resurrect.delete_state(id)
+				end, {
+					title = "Delete State",
+					description = "Select State to Delete and press Enter = accept, Esc = cancel, / = filter",
+					fuzzy_description = "Search State to Delete: ",
+					is_fuzzy = true,
+				})
 			end),
 		},
 	}
