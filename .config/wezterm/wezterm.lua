@@ -13,9 +13,10 @@ local function basename(s)
 	return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
 
-config.color_scheme = "SoftServer"
+config.color_scheme = "Catppuccin Mocha"
 
 config.font = wezterm.font("JetBrains Mono")
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 config.underline_thickness = "200%"
 config.underline_position = "-3pt"
 config.font_size = 13.0
@@ -35,6 +36,27 @@ config.window_padding = {
 config.initial_cols = 110
 config.initial_rows = 25
 config.window_decorations = "TITLE | RESIZE"
+
+wezterm.on("rename-workspace", function(window, pane)
+	local mux = wezterm.mux
+	local current_workspace = mux.get_active_workspace()
+
+	window:perform_action(
+		wezterm.action.PromptInputLine({
+			description = wezterm.format({
+				{ Attribute = { Intensity = "Bold" } },
+				{ Foreground = { AnsiColor = "Fuchsia" } },
+				{ Text = "Enter new workspace name:" },
+			}),
+			action = wezterm.action_callback(function(window, pane, new_name)
+				if new_name and new_name ~= "" then
+					mux.rename_workspace(current_workspace, new_name)
+				end
+			end),
+		}),
+		pane
+	)
+end)
 
 wezterm.on("toggle-opacity", function(window, pane)
 	local overrides = window:get_config_overrides() or {}
@@ -66,6 +88,7 @@ workspace_switcher.apply_to_config(config)
 workspace_switcher.workspace_formatter = function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
+		{ Foreground = { AnsiColor = "Fuchsia" } },
 		{ Text = "󱂬 : " .. label },
 	})
 end
@@ -88,6 +111,7 @@ end)
 wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window, path, label)
 	window:gui_window():set_right_status(wezterm.format({
 		{ Attribute = { Intensity = "Bold" } },
+
 		{ Text = basename(path) .. "  " },
 	}))
 end)
@@ -107,7 +131,8 @@ end)
 -- end)
 
 -- theme.setup(config)
-tab.setup(config)
+
+-- tab.setup(config)
 local wez = wezterm
 bar.apply_to_config(config, {
 	position = "bottom",
