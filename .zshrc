@@ -67,7 +67,7 @@ alias vim='nvim'
 alias c='clear'
 
 # flutter configuration
-export PATH="/Users/emiliofont/Development/flutter/bin":$PATH
+export PATH="$HOME/Development/flutter/bin":$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -82,13 +82,13 @@ export GOROOT="$(brew --prefix golang)/libexec"
 # export GOROOT=/usr/local/go
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/emiliofont/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/emiliofont/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/emiliofont/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/emiliofont/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
 
 # bun completions
-[ -s "/Users/emiliofont/.bun/_bun" ] && source "/Users/emiliofont/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
