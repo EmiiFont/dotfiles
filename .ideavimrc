@@ -1,0 +1,92 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+set relativenumber
+set hlsearch
+set number
+set showmodewidget
+set colorfulmodewidget
+set quickscope
+" Do incremental searching.
+set incsearch
+
+" map leader to spacebar
+let mapleader=" "
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" enable quickscope highlight on specific vim search motions
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+" Find (leader f)
+map <leader>fn <Action>(GotoFile)
+nmap fu <Action>(FindUsages)
+
+" Go to code
+map <leader>gd <Action>(GotoDeclaration)
+" nmap <leader>gy <Action>(GotoTypeDeclaration)
+nmap gi <Action>(GotoImplementation)
+map <leader>gu <Action>(ShowUsages)
+nmap <leader>gt <Action>(GotoTest)
+nmap gf <Action>(Forward)
+nmap gb <Action>(Back)
+" Navigation
+nmap fr <Action>(RecentFiles)
+nmap <leader>ff <Action>(FindInPath)
+nmap <leader>fs <Action>(FileStructurePopup)
+nmap gn <Action>(NextTab)
+nmap gp <Action>(PreviousTab)
+" close tab
+nmap gc <Action>(CloseContent)
+" Refactoring
+map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+map <leader>rn <Action>(RenameElement)
+map <leader>rm <Action>(ExtractMethod)
+
+" code action
+map <leader>ca <Action>(ShowIntentionActions)
+
+" formatting
+map <leader>cf <Action>(ReformatCode)
+map <leader>ci <Action>(FormatFile)
+" Window splits
+map <leader>wv <Action>(SplitVertically)
+map <leader>ws <Action>(SplitHorizontally)
+map <leader>wu <Action>(Unsplit)
+map <leader>wm <Action>(MoveEditorToOppositeTabGroup)
+map <leader>wt <Action>(GotoTab)
+" go to next split
+nmap <leader>wn <Action>(NextSplitter)
+nmap <leader>wp <Action>(PreviousSplitter)
+
+
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+map \b <Action>(ToggleLineBreakpoint)
+
+"" disable arrows in all modes
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
