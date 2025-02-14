@@ -13,7 +13,8 @@ local function basename(s)
 	return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
 
-config.color_scheme = "SoftServer"
+config.color_scheme = "Catppuccin Mocha"
+
 config.max_fps = 120
 config.animation_fps = 120
 config.status_update_interval = 500
