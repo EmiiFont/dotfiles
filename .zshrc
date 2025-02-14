@@ -1,7 +1,11 @@
-# powerlevel10k instant prompt
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
@@ -62,57 +66,43 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
 # Aliases
-alias ls='ls -Glha'
+alias ls='eza -a --icons=always'
 alias vim='nvim'
 alias c='clear'
 
-# flutter configuration
-export PATH="$HOME/Development/flutter/bin":$PATH
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# autoload -U +X bashcompinit && bashcompinit
-# complete -o nospace -C /usr/local/bin/bit bit
-export GOPATH="$HOME/Documents/goWorkSpace"
-export PATH="$HOME/Documents/goWorkSpace/bin:$PATH"
-# Homebrew
-export GOROOT="$(brew --prefix golang)/libexec"
-# Manual install
-# export GOROOT=/usr/local/go
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
-
 # bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+[ -s "/Users/emifont/.bun/_bun" ] && source "/Users/emifont/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-source /usr/local/share/powerlevel10k/powerlevel10k.zsh-theme
 
-# Automatically use nvm version from .nvmrc file
-autoload -U add-zsh-hook  # Only needed for zsh, skip for bash
+# pyenv
 
-nvm_auto_use() {
-  if [ -f .nvmrc ]; then
-    nvm use --silent >/dev/null
-  fi
-}
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
-add-zsh-hook chpwd nvm_auto_use  # For zsh only
-# nvm_auto_use  # Also call on initial shell start
+alias python="$(pyenv which python)"
+alias pip="$(pyenv which pip)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+export PATH=$PATH:$HOME/go/bin
 
-export JAVA_HOME=$(/usr/libexec/java_home -v 21)
-export PATH="$JAVA_HOME/bin:$PATH"
+if command -v java &> /dev/null; then
+    export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+    export PATH="$JAVA_HOME/bin:$PATH"
+fi
+
+export PATH=/Volumes/nvme1tb/Development/flutter/bin:$PATH
+
+. "$HOME/.local/bin/env"
 
 dot() {
     git --git-dir=$HOME/.dotfiles --work-tree=$HOME "$@"

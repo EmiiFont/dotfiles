@@ -1,0 +1,29 @@
+name: rose-pine
+primary: '#c4a7e7'  # Matches Rosé Pine's iris color for primary elements
+secondary: '#ebbcba'  # Rosé Pine's rose color for secondary elements
+accent: '#9ccfd8'  # Rosé Pine's foam color for accents
+background: '#000000'  # Rosé Pine's base color
+surface: '#1f1d2e'  # Rosé Pine's surface color
+error: '#eb6f92'  # Rosé Pine's love color for errors
+success: '#9ccfd8'  # Using foam color for success messages
+warning: '#f6c177'  # Rosé Pine's gold color for warnings
+text_area:
+  cursor: 'reverse'
+  cursor_line: 'underline'
+  selection: 'reverse'
+  gutter: 'bold #9ccfd8'  # Using foam color for gutter
+  matched_bracket: '#191724 on #9ccfd8'  # Base on foam for matched brackets
+url:
+  base: 'italic #9ccfd8'  # Foam color for URLs
+  protocol: 'bold #31748f'  # Pine color for protocols
+syntax:
+  json_key: 'italic #c4a7e7'  # Iris color for JSON keys
+  json_number: '#9ccfd8'  # Foam color for numbers
+  json_string: '#ebbcba'  # Rose color for strings
+  json_boolean: '#f6c177'  # Gold color for booleans
+  json_null: 'underline #eb6f92'  # Love color for null values
+method:
+  get: 'underline #9ccfd8'  # Foam color for GET
+  post: 'italic #ebbcba'  # Rose color for POST
+  put: 'bold #c4a7e7'  # Iris color for PUT
+  delete: 'strikethrough #eb6f92'  # Love color for DELETE

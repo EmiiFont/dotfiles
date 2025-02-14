@@ -1,0 +1,14 @@
+theme_directory: /Users/emifont/.config/posting/themes
+theme: catppuccin-mocha
+# load_builtin_themes: false
+response:
+  prettify_json: true
+heading:
+  show_host: true
+  show_version: false
+focus:
+  on_startup: collection
+keymap:
+  toggle-collection: ctrl+b
+  help: question_mark
+editor: nvim

@@ -19,6 +19,7 @@ config.max_fps = 120
 config.animation_fps = 120
 config.status_update_interval = 500
 config.font = wezterm.font("JetBrains Mono")
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 config.underline_thickness = "200%"
 config.underline_position = "-3pt"
 config.font_size = 13.0
@@ -90,6 +91,7 @@ workspace_switcher.apply_to_config(config)
 workspace_switcher.workspace_formatter = function(label)
 	return wezterm.format({
 		{ Attribute = { Italic = true } },
+		{ Foreground = { AnsiColor = "Fuchsia" } },
 		{ Text = "󱂬 : " .. label },
 	})
 end
@@ -112,6 +114,7 @@ end)
 wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window, path, label)
 	window:gui_window():set_right_status(wezterm.format({
 		{ Attribute = { Intensity = "Bold" } },
+
 		{ Text = basename(path) .. "  " },
 	}))
 end)
@@ -131,7 +134,8 @@ end)
 -- end)
 
 -- theme.setup(config)
-tab.setup(config)
+
+-- tab.setup(config)
 local wez = wezterm
 bar.apply_to_config(config, {
 	position = "bottom",

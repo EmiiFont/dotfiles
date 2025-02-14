@@ -32,9 +32,22 @@ Plug 'machakann/vim-highlightedyank'
 " Commentary plugin
 Plug 'tpope/vim-commentary'
 
+" this remap while in visiual mode
+" will delete what is currently highlighted and replace it
+" with what is in the register BUT it will YANK (delete) it
+" to a VOID register. Meaning I still have what I originally had
+" when I pasted. I don't loose the previous thing I YANKED!
+vnoremap <leader>p "_dP
+
+vnoremap <leader>y "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap <leader>y "+y
+
+
+
 " Find (leader f)
 map <leader>fn <Action>(GotoFile)
-nmap fu <Action>(FindUsages)
+nmap <leader>fu <Action>(FindUsages)
 
 " Go to code
 map <leader>gd <Action>(GotoDeclaration)
@@ -46,12 +59,17 @@ nmap gf <Action>(Forward)
 nmap gb <Action>(Back)
 " Navigation
 nmap fr <Action>(RecentFiles)
-nmap <leader>ff <Action>(FindInPath)
-nmap <leader>fs <Action>(FileStructurePopup)
-nmap gn <Action>(NextTab)
-nmap gp <Action>(PreviousTab)
+" show switcher
+nmap <leader><leader> <Action>(Switcher)
+
+
+nmap <leader>ss <Action>(FileStructurePopup)
+nmap L <Action>(NextTab)
+nmap H <Action>(PreviousTab)
+" open search everywhere
+nmap <leader>ff <Action>(SearchEverywhere)
 " close tab
-nmap gc <Action>(CloseContent)
+nmap <leader>wc <Action>(CloseContent)
 " Refactoring
 map <leader>rr <Action>(Refactorings.QuickListPopupAction)
 map <leader>rn <Action>(RenameElement)
@@ -73,8 +91,8 @@ map <leader>wt <Action>(GotoTab)
 nmap <leader>wn <Action>(NextSplitter)
 nmap <leader>wp <Action>(PreviousSplitter)
 
-
-
+" navigate to terminal
+nmap <leader>ft <Action>(ActivateTerminalToolWindow)
 "" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
 "" Map \r to the Reformat Code action
 "map \r <Action>(ReformatCode)

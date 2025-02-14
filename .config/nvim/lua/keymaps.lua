@@ -34,11 +34,6 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<leader>|', ':vsplit<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>-', ':split<CR>', { noremap = true, silent = true })
 
--- test commands
-vim.api.nvim_set_keymap('n', '<leader>tt', ":lua require('neotest').run.run()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>to', ":lua require('neotest').output.open()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ts', ":lua require('neotest').summary.toggle()<CR>", { noremap = true, silent = true })
-
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 

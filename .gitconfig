@@ -1,12 +1,30 @@
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[user]
+	email = emifont01@gmail.com
+	name = Emilio
 [filter "lfs"]
+	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-	clean = git-lfs clean -- %f
+[init]
+	defaultBranch = master
+[fetch]
+	prune = true
+	prunetags = true
 [core]
-	excludesfile = $HOME/.gitignore_global
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[commit]
-	template = $HOME/.stCommitMsg
+	excludesFile = ~/.gitignore
+[merge]
+	conflictstyle = zdiff3
+[branch]
+	sort = -committerdate
+[tag]
+	sort = -taggerdate
+[rebase]
+	autostash = true
+[diff]
+	algorithm = histogram

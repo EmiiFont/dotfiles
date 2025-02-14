@@ -199,30 +199,30 @@ function Keymaps.setup(config)
 		-- rename workspace
 		{ key = "R", mods = "LEADER", action = wezterm.action.EmitEvent("rename-workspace") },
 		{
-			key = "r",
-			mods = "LEADER",
+			key = "w",
+			mods = "ALT",
 			action = wezterm.action_callback(function(win, pane)
 				resurrect.save_state(resurrect.workspace_state.get_workspace_state())
 			end),
 		},
-		{
-			key = "W",
-			mods = "ALT",
-			action = resurrect.window_state.save_window_action(),
-		},
+		-- {
+		-- 	key = "W",
+		-- 	mods = "ALT",
+		-- 	action = resurrect.window_state.save_window_action(),
+		-- },
 		-- {
 		-- 	key = "T",
 		-- 	mods = "ALT",
 		-- 	action = resurrect.tab_state.save_tab_action(),
 		-- },
-		{
-			key = "s",
-			mods = "ALT",
-			action = wezterm.action_callback(function(win, pane)
-				resurrect.save_state(resurrect.workspace_state.get_workspace_state())
-				resurrect.window_state.save_window_action()
-			end),
-		},
+		-- {
+		-- 	key = "s",
+		-- 	mods = "ALT",
+		-- 	action = wezterm.action_callback(function(win, pane)
+		-- 		resurrect.save_state(resurrect.workspace_state.get_workspace_state())
+		-- 		resurrect.window_state.save_window_action()
+		-- 	end),
+		-- },
 		{
 			key = "r",
 			mods = "ALT",
@@ -247,6 +247,20 @@ function Keymaps.setup(config)
 						resurrect.tab_state.restore_tab(pane:tab(), state, opts)
 					end
 				end)
+			end),
+		},
+		{
+			key = "d",
+			mods = "ALT",
+			action = wezterm.action_callback(function(win, pane)
+				resurrect.fuzzy_load(win, pane, function(id)
+					resurrect.delete_state(id)
+				end, {
+					title = "Delete State",
+					description = "Select State to Delete and press Enter = accept, Esc = cancel, / = filter",
+					fuzzy_description = "Search State to Delete: ",
+					is_fuzzy = true,
+				})
 			end),
 		},
 	}
