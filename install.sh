@@ -88,6 +88,9 @@ formulae=(
     pkgconf
     python@3.13
     unibilium
+    uv
+    oven-sh/bun/bun
+    nvm
 )
 
 # List of Homebrew Casks to install
@@ -106,4 +109,10 @@ brew install "${formulae[@]}"
 echo "Installing Homebrew Casks..."
 brew install --cask "${casks[@]}"
 
-echo "Installation complete!"
+
+echo "Installating some dev tools!"
+
+pipx install posting
+nvm install 22
+
+
