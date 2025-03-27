@@ -69,6 +69,7 @@ eval "$(zoxide init --cmd cd zsh)"
 alias ls='eza -a --icons=always'
 alias vim='nvim'
 alias c='clear'
+alias vim='nvim'
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
