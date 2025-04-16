@@ -9,6 +9,8 @@ else
 fi
 
 # Update Homebrew
+export PATH=$PATH:/opt/homebrew/bin
+
 echo "Updating Homebrew..."
 brew update
 
