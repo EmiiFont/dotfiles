@@ -11,4 +11,5 @@ focus:
 keymap:
   toggle-collection: ctrl+b
   help: question_mark
+  search-requests: ctrl+y
 editor: nvim
