@@ -74,9 +74,9 @@ require('lazy').setup({
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
   require 'kickstart.plugins.themes',
   require 'kickstart.plugins.ai',
-  require 'kickstart.plugins.alpha',
+  -- require 'kickstart.plugins.alpha',
   require 'kickstart.plugins.hardtime',
-  require 'kickstart.plugins.auto-session',
+  -- require 'kickstart.plugins.auto-session',
   require 'kickstart.plugins.trouble',
   require 'kickstart.plugins.flash',
   require 'kickstart.plugins.typescript-tools',

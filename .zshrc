@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
@@ -84,8 +84,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-alias python="$(pyenv which python)"
-alias pip="$(pyenv which pip)"
+# alias python="$(pyenv which python)"
+# alias pip="$(pyenv which pip)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -101,10 +101,11 @@ if command -v java &> /dev/null; then
     export PATH="$JAVA_HOME/bin:$PATH"
 fi
 
-export PATH=/Volumes/nvme1tb/Development/flutter/bin:$PATH
+export PATH=~/Development/flutter/bin:$PATH
 
-. "$HOME/.local/bin/env"
+# . "$HOME/.local/bin/env"
 
 dot() {
     git --git-dir=$HOME/.dotfiles --work-tree=$HOME "$@"
 }
+source /usr/local/share/powerlevel10k/powerlevel10k.zsh-theme
