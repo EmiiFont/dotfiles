@@ -9,9 +9,53 @@ return {
           enabled = true,
           auto_trigger = true,
           debounce = 75,
+          keymap = {
+            accept = '<M-p>',
+            accept_word = false,
+            accept_line = false,
+            next = '<M-]>',
+            prev = '<M-[>',
+            dismiss = '<C-]>',
+          },
         },
       }
     end,
+  },
+  {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    dependencies = {
+      { 'zbirenbaum/copilot.lua' },
+      { 'nvim-lua/plenary.nvim' },
+    },
+    cmd = {
+      'CopilotChat',
+      'CopilotChatToggle',
+      'CopilotChatExplain',
+      'CopilotChatTests',
+      'CopilotChatFix',
+      'CopilotChatOptimize',
+    },
+    build = function()
+      -- Only run `make toktoken` on MacOS/Linux
+      if vim.fn.has 'mac' == 1 or vim.fn.has 'unix' == 1 then
+        return 'make tiktoken'
+      end
+    end,
+    opts = {
+      mappings = {
+        close = 'q',
+        submit = '<CR>',
+        yank_last = '<C-y>',
+        scroll_up = '<C-u>',
+        scroll_down = '<C-d>',
+      },
+      prompts = {
+        Explain = 'Explain how this code works:',
+        Fix = 'Fix the following issues in my code:',
+        Optimize = 'Optimize this code for performance:',
+        Tests = 'Generate unit tests for this code:',
+      },
+    },
   },
   -- {
   --   'yetone/avante.nvim',
