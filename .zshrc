@@ -5,12 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# source ~/powerlevel10k/powerlevel10k.zsh-theme
-
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
+  source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 fi
+
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -108,4 +108,3 @@ export PATH=~/Development/flutter/bin:$PATH
 dot() {
     git --git-dir=$HOME/.dotfiles --work-tree=$HOME "$@"
 }
-source /usr/local/share/powerlevel10k/powerlevel10k.zsh-theme
