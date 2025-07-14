@@ -16,6 +16,7 @@ brew update
 
 # List of Homebrew Formulae to install
 formulae=(
+    powerlevel10k
     auth0
     cffi
     fd
@@ -116,5 +117,7 @@ echo "Installating some dev tools!"
 
 pipx install posting
 nvm install 22
+
+echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
 
 
