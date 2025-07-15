@@ -39,6 +39,14 @@ config.window_padding = {
 config.initial_cols = 110
 config.initial_rows = 25
 config.window_decorations = "TITLE | RESIZE"
+config.switch_to_last_active_tab_when_closing_tab = true
+config.pane_focus_follows_mouse = true
+config.scrollback_lines = 5000
+config.inactive_pane_hsb = {
+	hue = 1.0,
+	saturation = 1.0,
+	brightness = 0.5,
+}
 
 wezterm.on("rename-workspace", function(window, pane)
 	local mux = wezterm.mux
@@ -71,10 +79,6 @@ wezterm.on("toggle-opacity", function(window, pane)
 	end
 	window:set_config_overrides(overrides)
 end)
-
-config.switch_to_last_active_tab_when_closing_tab = true
-config.pane_focus_follows_mouse = true
-config.scrollback_lines = 5000
 
 keymaps.setup(config)
 
@@ -194,4 +198,5 @@ bar.apply_to_config(config, {
 		},
 	},
 })
+
 return config
