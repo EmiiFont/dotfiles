@@ -11,6 +11,11 @@ local pane_resize = 5
 function Keymaps.setup(config)
 	config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 	config.keys = {
+		{
+			key = "m",
+			mods = "LEADER",
+			action = wezterm.action.ShowDebugOverlay,
+		},
 		-- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
 		{
 			key = "a",
@@ -195,7 +200,15 @@ function Keymaps.setup(config)
 			end),
 		},
 		-- list WORKSPACES
-		{ key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() },
+		{
+			key = "s",
+			mods = "LEADER",
+			action = wezterm.action_callback(function(window, pane)
+				wezterm.log_info("Sessionizer triggered")
+				workspace_switcher.switch_workspace()
+			end),
+		},
+
 		-- rename workspace
 		{ key = "R", mods = "LEADER", action = wezterm.action.EmitEvent("rename-workspace") },
 		{
@@ -229,8 +242,7 @@ function Keymaps.setup(config)
 			action = wezterm.action_callback(function(win, pane)
 				resurrect.fuzzy_load(win, pane, function(id, label)
 					local type = string.match(id, "^([^/]+)") -- match before '/'
-					id = string.match(id, "([^/]+)$") -- match after '/'
-					id = string.match(id, "(.+)%..+$") -- remove file extention
+					id = string.match(id, "([^/]+)$$") -- remove file extention
 					local opts = {
 						relative = true,
 						restore_text = true,

@@ -1,13 +1,15 @@
 local wezterm = require("wezterm")
 local tab = require("tab")
 local theme = require("theme")
-local keymaps = require("keymaps")
 local config = wezterm.config_builder()
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
+local wpr = wezterm.plugin.require("https://github.com/vieitesss/workspacesionizer.wezterm")
 
-resurrect.periodic_save()
+local keymaps = require("keymaps")
+
+-- resurrect.periodic_save()
 
 local function basename(s)
 	return string.gsub(s, "(.*[/\\])(.*)", "%2")
@@ -100,20 +102,20 @@ workspace_switcher.workspace_formatter = function(label)
 	})
 end
 
-wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
-	window:gui_window():set_right_status(wezterm.format({
-		{ Attribute = { Intensity = "Bold" } },
-		{ Text = basename(path) .. "  " },
-	}))
-	local workspace_state = resurrect.workspace_state
-
-	workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
-		window = window,
-		relative = true,
-		restore_text = true,
-		on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-	})
-end)
+-- wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
+-- 	window:gui_window():set_right_status(wezterm.format({
+-- 		{ Attribute = { Intensity = "Bold" } },
+-- 		{ Text = basename(path) .. "  " },
+-- 	}))
+-- 	local workspace_state = resurrect.workspace_state
+--
+-- 	workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
+-- 		window = window,
+-- 		relative = true,
+-- 		restore_text = true,
+-- 		on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+-- 	})
+-- end)
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window, path, label)
 	window:gui_window():set_right_status(wezterm.format({
@@ -123,10 +125,10 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window
 	}))
 end)
 
-wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
-	local workspace_state = resurrect.workspace_state
-	resurrect.save_state(workspace_state.get_workspace_state())
-end)
+-- wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
+-- 	local workspace_state = resurrect.workspace_state
+-- 	resurrect.save_state(workspace_state.get_workspace_state())
+-- end)
 
 -- -- Show which key table is active in the status area
 -- wezterm.on("update-right-status", function(window, pane)
@@ -196,6 +198,16 @@ bar.apply_to_config(config, {
 			max_width = 64,
 			throttle = 15,
 		},
+	},
+})
+
+wpr.apply_to_config(config, {
+	paths = { "~/.config", "~/Developer/Github/" },
+	git_repos = false,
+	show = "base",
+	binding = {
+		key = "o",
+		mods = "LEADER",
 	},
 })
 
