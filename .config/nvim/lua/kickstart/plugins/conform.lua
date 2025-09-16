@@ -12,38 +12,60 @@ return {
         mode = '',
         desc = '[F]ormat buffer',
       },
-    },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        if vim.b[bufnr].disable_format_on_save then
-          return false
-        end
-        local disable_filetypes = { c = true, cpp = true }
-        local lsp_format_opt
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
-        else
-          lsp_format_opt = 'fallback'
-        end
-        return {
-          timeout_ms = 500,
-          lsp_format = lsp_format_opt,
-        }
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd' },
-        terraform = { 'terraform_fmt' },
+      {
+        '<leader>uf',
+        function()
+          vim.b.disable_format_on_save = not vim.b.disable_format_on_save
+          local status = vim.b.disable_format_on_save and 'disabled' or 'enabled'
+          vim.notify('Autoformat ' .. status)
+        end,
+        mode = '',
+        desc = 'Toggle a[u]toformat',
       },
     },
+     opts = {
+       notify_on_error = false,
+       format_on_save = function(bufnr)
+         -- Disable "format_on_save lsp_fallback" for languages that don't
+         -- have a well standardized coding style. You can add additional
+         -- languages here or re-enable it for the disabled ones.
+         if vim.b[bufnr].disable_format_on_save then
+           return false
+         end
+         local disable_filetypes = { c = true, cpp = true }
+         local lsp_format_opt
+         if disable_filetypes[vim.bo[bufnr].filetype] then
+           lsp_format_opt = 'never'
+         else
+           lsp_format_opt = 'fallback'
+         end
+         return {
+           timeout_ms = 500,
+           lsp_format = lsp_format_opt,
+         }
+       end,
+       formatters_by_ft = {
+         lua = { 'stylua' },
+         -- Conform can also run multiple formatters sequentially
+         -- python = { "isort", "black" },
+         --
+         -- You can use 'stop_after_first' to run the first available formatter from the list
+         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+         typescript = { 'prettierd' },
+         terraform = { 'terraform_fmt' },
+       },
+       formatters = {
+         prettier = {
+           cwd = function(ctx)
+             return vim.fn.fnamemodify(ctx.filename, ':h')
+           end,
+         },
+         prettierd = {
+           cwd = function(ctx)
+             return vim.fn.fnamemodify(ctx.filename, ':h')
+           end,
+         },
+       },
+     },
   },
 }

@@ -34,6 +34,16 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<leader>|', ':vsplit<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>-', ':split<CR>', { noremap = true, silent = true })
 
+-- Close all file buffers except current
+vim.keymap.set('n', '<leader>bd', function()
+  local current_buf = vim.api.nvim_get_current_buf()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= current_buf and vim.api.nvim_buf_get_option(buf, 'buftype') == '' then
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end
+  end
+end, { desc = 'Close all file buffers except current' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 

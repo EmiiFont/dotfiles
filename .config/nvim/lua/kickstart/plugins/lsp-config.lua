@@ -193,7 +193,6 @@ return {
             completeFunctionCalls = true,
           },
         },
-        --
 
         lua_ls = {
           -- cmd = {...},
