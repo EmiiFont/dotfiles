@@ -14,104 +14,9 @@ export PATH=$PATH:/opt/homebrew/bin
 echo "Updating Homebrew..."
 brew update
 
-# List of Homebrew Formulae to install
-formulae=(
-    powerlevel10k
-    auth0
-    cffi
-    fd
-    giflib
-    icu4c@76
-    libgit2@1.7
-    libvterm
-    libxrender
-    lzo
-    oniguruma
-    pycparser
-    readline
-    xorgproto
-    autoconf
-    flyctl
-    fontconfig
-    glib
-    jpeg-turbo
-    libpng
-    libx11
-    little-cms2
-    m4
-    openjdk
-    pyenv
-    ripgrep
-    xz
-    bat
-    cryptography
-    go
-    jq
-    libssh2
-    libxau
-    lpeg
-    mongodb-database-tools
-    openssl@3
-    python-packaging
-    sqlite
-    zoxide
-    ca-certificates
-    docker-compose
-    freetype
-    graphite2
-    lazydocker
-    libtiff
-    libxcb
-    luajit
-    mpdecimal
-    pcre2
-    python@3.11
-    terraform
-    zstd
-    cairo
-    exercism
-    fzf
-    harfbuzz
-    lazygit
-    libunistring
-    libxdmcp
-    luv
-    msgpack
-    pixman
-    tree-sitter
-    certifi
-    eza
-    gettext
-    httpie
-    libgit2
-    libuv
-    libxext
-    lz4
-    neovim
-    pkgconf
-    python@3.13
-    unibilium
-    uv
-    oven-sh/bun/bun
-    nvm
-)
-
-# List of Homebrew Casks to install
-casks=(
-    amethyst
-    ghostty
-    git-credential-manager
-    ngrok
-)
-
-# Install Homebrew Formulae
-echo "Installing Homebrew Formulae..."
-brew install "${formulae[@]}"
-
-# Install Homebrew Casks
-echo "Installing Homebrew Casks..."
-brew install --cask "${casks[@]}"
-
+# Install everything from the Brewfile (formulae + casks)
+echo "Installing formulae and casks from Brewfile..."
+brew bundle --file="$(dirname "$0")/Brewfile"
 
 echo "Installating some dev tools!"
 
@@ -119,5 +24,3 @@ pipx install posting
 nvm install 22
 
 echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
-
-
